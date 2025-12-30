@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Alquiler de Departamento - Quinta con Pileta</title>
+    <style>
+        :root {
+            --primary-color: #2c3e50;
+            --accent-color: #d35400; /* Naranja más sofisticado */
+            --bg-light: #fdfdfd;
+            --text-color: #2d3436;
+            --shadow: 0 10px 30px rgba(0,0,0,0.08);
+        }
+
+        body {
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            color: var(--text-color);
+            line-height: 1.8;
+            background-color: #f9f9f9;
+        }
+
+        /* HEADER REFINADO */
+        header {
+            background-image: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url('fotos/departamento.jpeg');
+            background-size: cover;
+            background-position: center;
+            height: 85vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            color: white;
+        }
+
+        header h1 { 
+            font-size: clamp(2rem, 5vw, 3.5rem); 
+            margin-bottom: 15px;
+            letter-spacing: -1px;
+            font-weight: 700;
+        }
+
+        header p { 
+            font-size: 1.2rem; 
+            font-weight: 300;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: auto;
+            padding: 40px 20px;
+        }
+
+        /* SECCIONES CON TARJETAS */
+        section {
+            padding: 60px 40px;
+            background: white;
+            border-radius: 20px;
+            margin-bottom: 40px;
+            box-shadow: var(--shadow);
+            border: none;
+        }
+
+        h2 {
+            color: var(--primary-color);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 30px;
+            font-size: 1.5rem;
+            text-align: center;
+            position: relative;
+        }
+
+        h2::after {
+            content: '';
+            display: block;
+            width: 50px;
+            height: 3px;
+            background: var(--accent-color);
+            margin: 10px auto;
+        }
+
+        /* VIDEO PROFESIONAL */
+        .video-container {
+            position: relative;
+            padding-bottom: 56.25%;
+            height: 0;
+            overflow: hidden;
+            background: #000;
+            border-radius: 15px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+        }
+
+        .video-container video {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            object-fit: cover;
+        }
+
+        /* GALERIA MODERNA */
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 20px;
+        }
+
+        .gallery-grid img {
+            width: 100%;
+            height: 220px;
+            object-fit: cover;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.4s ease;
+            filter: grayscale(20%);
+        }
+
+        .gallery-grid img:hover {
+            transform: translateY(-5px);
+            filter: grayscale(0%);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.15);
+        }
+
+        /* COMODIDADES REESTILIZADAS */
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 20px;
+        }
+
+        .feature-item {
+            background: #fff;
+            padding: 25px;
+            border-radius: 15px;
+            border: 1px solid #eee;
+            transition: 0.3s;
+            font-weight: 500;
+        }
+
+        .feature-item:hover {
+            border-color: var(--accent-color);
+            color: var(--accent-color);
+        }
+
+        /* MODAL */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 2000;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background-color: rgba(15, 20, 25, 0.95);
+            justify-content: center;
+            align-items: center;
+            backdrop-filter: blur(5px);
+        }
+
+        .modal-content {
+            max-width: 95%;
+            max-height: 90vh;
+            border-radius: 10px;
+            animation: zoomIn 0.3s ease;
+        }
+
+        @keyframes zoomIn {
+            from { transform: scale(0.9); opacity: 0; }
+            to { transform: scale(1); opacity: 1; }
+        }
+
+        /* CONTACTO */
+        .contact-box {
+            background-color: var(--primary-color);
+            color: white;
+            text-align: center;
+            padding: 60px 20px;
+            border-radius: 20px;
+        }
+
+        .btn {
+            display: inline-block;
+            background: var(--accent-color);
+            color: white;
+            padding: 15px 35px;
+            text-decoration: none;
+            border-radius: 50px;
+            margin: 10px;
+            font-weight: 600;
+            transition: all 0.3s;
+            box-shadow: 0 4px 15px rgba(230, 126, 34, 0.3);
+        }
+
+        .btn:hover {
+            transform: scale(1.05);
+            background: #e67e22;
+        }
+
+        @media(max-width: 768px) {
+            section { padding: 30px 20px; }
+            header h1 { font-size: 2.2rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div>
+            <h1>Departamento en Alquiler</h1>
+            <p>Confort & Naturaleza</p>
+            <br>
+            <a href="#contacto" class="btn">Reservar Ahora</a>
+        </div>
+    </header>
+
+    <div class="container">
+        
+        <section id="descripcion">
+            <h2>El Lugar</h2>
+            <p style="text-align: center; max-width: 700px; margin: auto;">
+                Ubicado en una zona tranquila, este espacio combina la practicidad de un departamento con los lujos de una quinta: 
+                parque propio de grandes dimensiones, piscina privada y una iluminación exterior pensada para disfrutar el jardín de noche. 
+                Privacidad absoluta y un entorno verde único.
+            </p>
+        </section>
+
+        <section id="video-recorrido">
+            <h2>Video Recorrido</h2>
+            <div class="video-container">
+                <video controls poster="fotos/departamento.jpeg">
+                    <source src="fotos/videoDefinitivoDepto.mp4" type="video/mp4">
+                    Tu navegador no soporta la reproducción de videos.
+                </video> 
+            </div>
+        </section>
+
+        <section id="galeria">
+            <h2>Galería de Fotos</h2>
+            <div class="gallery-grid">
+                <img src="fotos/departamento.jpeg" alt="Foto" onclick="openModal(this.src)">
+                <img src="fotos/living.jpeg" alt="Foto" onclick="openModal(this.src)">
+                <img src="fotos/cocina.jpeg" alt="Foto" onclick="openModal(this.src)">
+                <img src="fotos/dormitorio.jpeg" alt="Foto" onclick="openModal(this.src)">
+                <img src="fotos/dormitorio2.jpeg" alt="Foto" onclick="openModal(this.src)">
+                <img src="fotos/banio.jpeg" alt="Foto" onclick="openModal(this.src)">
+                <img src="fotos/patio1.jpeg" alt="Foto" onclick="openModal(this.src)">
+                <img src="fotos/patio2.jpeg" alt="Foto" onclick="openModal(this.src)">
+                <img src="fotos/parrilla.jpeg" alt="Foto" onclick="openModal(this.src)">
+                <img src="fotos/pileta.jpeg" alt="Foto" onclick="openModal(this.src)">
+            </div>
+        </section>
+
+        <div id="myModal" class="modal" onclick="closeModal()">
+            <span class="close-modal">&times;</span>
+            <img class="modal-content" id="imgModal">
+        </div>
+
+        <section id="caracteristicas">
+            <h2>Comodidades</h2>
+            <div class="features-grid">
+                <div class="feature-item">📶 WiFi Alta Velocidad</div>
+                <div class="feature-item">❄️ Ventiladores</div>
+                <div class="feature-item">🍳 Cocina Equipada</div>
+                <div class="feature-item">🏊 Pileta Privada</div>
+                <div class="feature-item">🌳 Jardín Iluminado</div>
+                <div class="feature-item">🚗 Estacionamiento</div>
+            </div>
+        </section>
+
+        <section id="contacto">
+            <div class="contact-box">
+            <h2 style="color: white !important;">¿Estás listo para venir?</h2>
+                <p style="font-size: 1.8rem; margin-bottom: 30px; color: white;">
+                <strong>$50 USD</strong> <span style="font-size: 1rem; opacity: 0.8;">/ noche</span>
+                </p>
+                <a href="https://api.whatsapp.com/send?phone=5492267637841&text=Hola,%20me%20interesa%20el%20departamento" class="btn" target="_blank">Enviar WhatsApp</a>
+                <a href="mailto:francoalmada333@gmail.com" class="btn" style="background: transparent; border: 2px solid white; box-shadow: none; color: white;">Enviar Email</a>
+            </div>
+        </section>
+    </div>
+
+    <script>
+        function openModal(src) {
+            document.getElementById("imgModal").src = src;
+            document.getElementById("myModal").style.display = "flex";
+        }
+
+        function closeModal() {
+            document.getElementById("myModal").style.display = "none";
+        }
+
+        document.addEventListener('keydown', function(event) {
+            if (event.key === "Escape") closeModal();
+        });
+    </script>
+
+</body>
+</html>
