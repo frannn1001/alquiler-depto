@@ -9,7 +9,7 @@
     <style>
         :root {
             --primary-color: #2c3e50;
-            --accent-color: #d35400; /* Naranja más sofisticado */
+            --accent-color: #d35400;
             --bg-light: #fdfdfd;
             --text-color: #2d3436;
             --shadow: 0 10px 30px rgba(0,0,0,0.08);
@@ -87,20 +87,25 @@
         }
 
         /* VIDEO PROFESIONAL */
-        .video-container {
-            position: relative;
-            padding-bottom: 56.25%;
-            height: 0;
-            overflow: hidden;
-            background: #000;
+        #video-recorrido {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        #video-recorrido .video-container {
+            width: 100%;
+            max-width: 315px;
+            aspect-ratio: 9 / 16;
             border-radius: 15px;
+            overflow: hidden;
             box-shadow: 0 20px 40px rgba(0,0,0,0.2);
         }
 
-        .video-container video {
-            position: absolute;
-            top: 0; left: 0; width: 100%; height: 100%;
-            object-fit: cover;
+        #video-recorrido iframe {
+            width: 100%;
+            height: 100%;
+            border: 0;
         }
 
         /* GALERIA MODERNA */
@@ -110,7 +115,7 @@
             gap: 20px;
         }
 
-        .gallery-grid img {
+        .gallery-img {
             width: 100%;
             height: 220px;
             object-fit: cover;
@@ -120,7 +125,7 @@
             filter: grayscale(20%);
         }
 
-        .gallery-grid img:hover {
+        .gallery-img:hover {
             transform: translateY(-5px);
             filter: grayscale(0%);
             box-shadow: 0 10px 20px rgba(0,0,0,0.15);
@@ -147,7 +152,7 @@
             color: var(--accent-color);
         }
 
-        /* MODAL */
+        /* --- MODAL Y FLECHAS DE NAVEGACIÓN --- */
         .modal {
             display: none;
             position: fixed;
@@ -161,15 +166,64 @@
         }
 
         .modal-content {
-            max-width: 95%;
+            max-width: 90%;
             max-height: 90vh;
             border-radius: 10px;
             animation: zoomIn 0.3s ease;
+            user-select: none; /* Evita que se seleccione la imagen al hacer click rápido */
         }
 
         @keyframes zoomIn {
             from { transform: scale(0.9); opacity: 0; }
             to { transform: scale(1); opacity: 1; }
+        }
+
+        .close-modal {
+            position: absolute;
+            top: 15px;
+            right: 35px;
+            color: #f1f1f1;
+            font-size: 40px;
+            font-weight: bold;
+            transition: 0.3s;
+            z-index: 2002;
+            cursor: pointer;
+        }
+
+        .close-modal:hover {
+            color: var(--accent-color);
+        }
+
+        /* Estilos de las flechas (Siguiente / Anterior) */
+        .prev, .next {
+            cursor: pointer;
+            position: absolute;
+            top: 50%;
+            width: auto;
+            padding: 16px;
+            margin-top: -50px;
+            color: white;
+            font-weight: bold;
+            font-size: 40px;
+            transition: 0.6s ease;
+            border-radius: 0 3px 3px 0;
+            user-select: none;
+            -webkit-user-select: none;
+            z-index: 2001;
+        }
+
+        .next {
+            right: 0;
+            border-radius: 3px 0 0 3px;
+        }
+
+        .prev {
+            left: 0;
+            border-radius: 3px 0 0 3px;
+        }
+
+        .prev:hover, .next:hover {
+            background-color: rgba(0, 0, 0, 0.8);
         }
 
         /* CONTACTO */
@@ -202,23 +256,7 @@
         @media(max-width: 768px) {
             section { padding: 30px 20px; }
             header h1 { font-size: 2.2rem; }
-        }
-
-        #video-recorrido {
-        display: flex;
-        flex-direction: column;
-        align-items: center; /* 👈 centra horizontal */
-        }
-
-        #video-recorrido .video-container {
-        width: 315px;
-        aspect-ratio: 9 / 16;
-        }
-
-        #video-recorrido iframe {
-        width: 100%;
-        height: 100%;
-        border: 0;
+            .prev, .next { font-size: 30px; padding: 10px; } /* Flechas un poco mas chicas en celular */
         }
 
     </style>
@@ -244,25 +282,13 @@
                 Privacidad absoluta y un entorno verde único.
             </p>
         </section>
-        <!--
-        <section id="video-recorrido">
-            <h2>Video Recorrido</h2>
-            <div class="video-container">
-                <video controls poster="fotos/departamento.jpeg">
-                    <source src="fotos/videoDefinitivoDepto.mp4" type="video/mp4">
-                    Tu navegador no soporta la reproducción de videos.
-                </video> 
-            </div>
-        </section>
-        -->
 
         <section id="video-recorrido">
             <h2>Video Recorrido</h2>
-            <div style="max-width:315px; aspect-ratio: 9 / 16;">
+            <div class="video-container">
                 <iframe
                     src="https://www.youtube.com/embed/9dFYfB4FDR4"
-                    style="width:100%; height:100%;"
-                    frameborder="0"
+                    title="Recorrido"
                     allow="autoplay; encrypted-media"
                     allowfullscreen>
                 </iframe>
@@ -272,23 +298,25 @@
         <section id="galeria">
             <h2>Galería de Fotos</h2>
             <div class="gallery-grid">
-                <img src="fotos/departamento.jpeg" alt="Foto" onclick="openModal(this.src)">
-                <img src="fotos/living.jpeg" alt="Foto" onclick="openModal(this.src)">
-                <img src="fotos/cocina.jpeg" alt="Foto" onclick="openModal(this.src)">
-                <img src="fotos/dormitorio.jpeg" alt="Foto" onclick="openModal(this.src)">
-                <img src="fotos/dormitorio2.jpeg" alt="Foto" onclick="openModal(this.src)">
-                <img src="fotos/banio.jpeg" alt="Foto" onclick="openModal(this.src)">
-                <img src="fotos/patio1.jpeg" alt="Foto" onclick="openModal(this.src)">
-                <img src="fotos/patio2.jpeg" alt="Foto" onclick="openModal(this.src)">
-                <img src="fotos/parrilla.jpeg" alt="Foto" onclick="openModal(this.src)">
-                <img src="fotos/pileta2.jpeg" alt="Foto" onclick="openModal(this.src)">
-                <img src="fotos/pileta3.jpeg" alt="Foto" onclick="openModal(this.src)">
-                <img src="fotos/ubicacion.png" alt="Foto" onclick="openModal(this.src)">
+                <img class="gallery-img" src="fotos/departamento.jpeg" alt="Departamento">
+                <img class="gallery-img" src="fotos/living.jpeg" alt="Living">
+                <img class="gallery-img" src="fotos/cocina.jpeg" alt="Cocina">
+                <img class="gallery-img" src="fotos/dormitorio.jpeg" alt="Dormitorio">
+                <img class="gallery-img" src="fotos/dormitorio2.jpeg" alt="Dormitorio 2">
+                <img class="gallery-img" src="fotos/banio.jpeg" alt="Baño">
+                <img class="gallery-img" src="fotos/patio1.jpeg" alt="Patio 1">
+                <img class="gallery-img" src="fotos/patio2.jpeg" alt="Patio 2">
+                <img class="gallery-img" src="fotos/parrilla.jpeg" alt="Parrilla">
+                <img class="gallery-img" src="fotos/pileta2.jpeg" alt="Pileta">
+                <img class="gallery-img" src="fotos/pileta3.jpeg" alt="Pileta Detalle">
+                <img class="gallery-img" src="fotos/ubicacion.png" alt="Ubicación">
             </div>
         </section>
 
-        <div id="myModal" class="modal" onclick="closeModal()">
-            <span class="close-modal">&times;</span>
+        <div id="myModal" class="modal" onclick="clickOutside(event)">
+            <span class="close-modal" onclick="closeModal()">×</span>
+            <a class="prev" onclick="changeSlide(-1)">&#10094;</a>
+            <a class="next" onclick="changeSlide(1)">&#10095;</a>
             <img class="modal-content" id="imgModal">
         </div>
 
@@ -336,22 +364,72 @@
     </div>
 
     <script>
-        function openModal(src) {
-            document.getElementById("imgModal").src = src;
-            document.getElementById("myModal").style.display = "flex";
+        // Variables globales
+        let currentIndex = 0;
+        const images = document.querySelectorAll('.gallery-img');
+        const modal = document.getElementById("myModal");
+        const modalImg = document.getElementById("imgModal");
+        
+        // Asignar evento click a todas las imagenes de la clase gallery-img
+        images.forEach((img, index) => {
+            img.addEventListener('click', function() {
+                openModal(index);
+            });
+        });
+
+        // Abrir modal en la foto seleccionada
+        function openModal(index) {
+            currentIndex = index;
+            modal.style.display = "flex";
+            updateModalImage();
         }
 
+        // Cerrar modal
         function closeModal() {
-            document.getElementById("myModal").style.display = "none";
+            modal.style.display = "none";
         }
 
+        // Cambiar foto (n es +1 o -1)
+        function changeSlide(n) {
+            currentIndex += n;
+            // Bucle infinito: si pasa la ultima, vuelve a la primera
+            if (currentIndex >= images.length) {
+                currentIndex = 0; 
+            } else if (currentIndex < 0) {
+                currentIndex = images.length - 1; 
+            }
+            updateModalImage();
+        }
+
+        // Actualizar la fuente de la imagen del modal
+        function updateModalImage() {
+            modalImg.src = images[currentIndex].src;
+        }
+
+        // Cerrar si clicamos fuera de la foto (en lo negro)
+        function clickOutside(e) {
+            if (e.target === modal) {
+                closeModal();
+            }
+        }
+
+        // Detectar teclas (Escape, Flecha Derecha, Flecha Izquierda)
         document.addEventListener('keydown', function(event) {
-            if (event.key === "Escape") closeModal();
+            if (modal.style.display === "flex") {
+                if (event.key === "Escape") {
+                    closeModal();
+                } else if (event.key === "ArrowRight") {
+                    changeSlide(1);
+                } else if (event.key === "ArrowLeft") {
+                    changeSlide(-1);
+                }
+            }
         });
     </script>
 
 </body>
 </html>
+
 
 
 
