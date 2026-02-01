@@ -13,15 +13,47 @@
             --bg-light: #fdfdfd;
             --text-color: #2d3436;
             --shadow: 0 10px 30px rgba(0,0,0,0.08);
-            /* Colores para el calendario */
             --busy-color: #fecaca;
             --avail-color: #bbf7d0;
+        }
+
+        /* Estilos para la barra de navegación */
+        nav {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 15px 0;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: var(--primary-color);
+            font-weight: 600;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            padding: 5px 10px;
+            transition: 0.3s;
+        }
+
+        nav a:hover {
+            color: var(--accent-color);
+        }
+
+        html {
+            scroll-behavior: smooth; /* Desplazamiento suave al hacer clic */
         }
 
         body {
             font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
             margin: 0;
-            padding: 0;
+            padding-top: 60px; /* Espacio para que el nav no tape el contenido */
             color: var(--text-color);
             line-height: 1.8;
             background-color: #f9f9f9;
@@ -307,7 +339,17 @@
 </head>
 <body>
 
-    <header>
+    <nav>
+        <a href="#descripcion">El Lugar</a>
+        <a href="#video-recorrido">Video</a>
+        <a href="#galeria">Fotos</a>
+        <a href="#caracteristicas">Comodidades</a>
+        <a href="#disponibilidad">Disponibilidad</a>
+        <a href="#ubicacion">Mapa</a>
+        <a href="#contacto">Contacto</a>
+    </nav>
+
+    <header id="inicio">
         <div>
             <h1>Departamento en Alquiler</h1>
             <p>Confort & Naturaleza</p>
@@ -393,7 +435,7 @@
             <h2>Ubicación</h2>
             <div class="map-wrapper">
                 <iframe
-                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1593.1167796520042!2d-57.12179548641342!3d-37.00422407881702!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x959b9d422f21efdb%3A0xd37102f649d56447!2sC.%2025%20675%2C%20B7163%20Gral.%20Juan%20Madariaga%2C%20Provincia%20de%20Buenos%20Aires!5e0!3m2!1ses!2sar!4v1767663400490!5m2!1ses!2sar" 
+                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d12831.602640280144!2d-57.1350172!3d-36.9996614!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x9590059e99217039%3A0x6b4991f86807e372!2sGral.%20Juan%20Madariaga%2C%20Provincia%20de%20Buenos%20Aires!5e0!3m2!1ses-419!2sar!4v1700000000000!5m2!1ses-419!2sar" 
                     width="100%"
                     height="400" 
                     style="border:0;" 
@@ -444,7 +486,6 @@
             const y = calendarDate.getFullYear();
             const m = calendarDate.getMonth();
 
-            // Obtenemos la fecha de hoy a las 00:00 para comparar
             const today = new Date();
             today.setHours(0, 0, 0, 0);
 
@@ -465,27 +506,22 @@
         
             for(let d = 1; d <= days; d++) {
                 let dateStr = `${y}-${String(m + 1).padStart(2, '0')}-${String(d).padStart(2, '0')}`;
-
-                // Creamos la fecha del día actual del bucle
                 let loopDate = new Date(y, m, d);
-
                 let match = sheetData.find(r => r.Fecha === dateStr);
                 let div = document.createElement("div");
                 div.className = "day";
                 div.innerHTML = `<strong>${d}</strong>`;
             
-                // Solo aplicamos el color de la hoja de cálculo si el día es HOY o FUTURO
                 if (loopDate >= today && match && match.Estado) {
                     const estado = match.Estado.toLowerCase().trim();
                     if (estado === "disponible") div.classList.add("available");
                     else if (estado === "ocupado") div.classList.add("busy");
                 }
-
                 calendar.appendChild(div);
             }
         }
 
-        // --- LOGICA GALERIA ORIGINAL ---
+        // --- LOGICA GALERIA ---
         let currentIndex = 0;
         const images = document.querySelectorAll('.gallery-img');
         const modal = document.getElementById("myModal");
